@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aydenzhou-ctrl/anthony/refs/heads/main/players_15.csv"
+  },
+  
+  "width": "container",
+
+  "transform": [
+    {
+      "fold": ["pace", "shooting", "passing", "dribbling", "defending", "physic"],
+      "as": ["category", "amount"]
+    },
+    {
+    "filter": "datum.league_level >= 1 && datum.league_level <= 4"
+  }
+  ],
+
+  "mark": "bar",
+
+  "selection": {
+  "hover": {
+    "type": "single",
+    "on": "mouseover",
+    "clear": "mouseout"
+  }
+},
+
+  "encoding": {
+    "x": {
+      "field": "league_level",
+      "type": "ordinal",
+      "title": "League"
+    },
+
+    "y": {
+      "field": "amount",
+      "type": "quantitative",
+      "aggregate": "mean",
+      "title": "Average Skill Rating"
+    },
+    "color": {
+  "field": "category",
+  "type": "nominal",
+  "title": "Skill"
+},
+"opacity": {
+  "condition": {
+    "selection": "hover",
+    "value": 1
+  },
+  "value": 0.4
+},
+"tooltip": [
+  { "field": "league_level", "type": "ordinal", "title": "League Level" },
+  { "field": "category", "type": "nominal", "title": "Skill" },
+  { "field": "amount", "type": "quantitative", "aggregate": "mean", "title": "Avg Rating" }
+]
+  }
+}

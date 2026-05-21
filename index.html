@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Multiple Visualisations | An Example</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="styles.css" media="all">
+
+
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h1>FIFA Statistics</h1>
+        <p>Are legends born or made?</p>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
+          <h2>League Level</h2>
+          <p>Football players in league 1 are considered the best of the best. This league includes
+            players such as Lionel Messi and Cristiano Ronaldo. To be at the top of their game, players must possess exceptional skills and dedication.
+          This gets reflected in their performance metrics across various skills, such as pace, shooting, and passing.</p>
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div id="vis1" class="vis-container"></div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h2>Best Players</h2>
+          <p>It appears the best players of football are often between the ages of 25-30 and are in league 1.
+            This is because players in this group have typically reached their physical peak and have accumulated enough experience to perform at a high level. 
+            However, there are always exceptions to this trend, with new players always emerging from the lower leagues and older players maintaining their performance levels.
+          </p>
+        </div>
+      </div>
+      <div class="pure-u-1-3">
+        <div id="vis4" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-3" style="width: 31.5%;">
+        <div id="vis3" class="vis-container" style="margin-left: 15px;"></div>
+      </div>
+
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-2-3">
+        <div id="vis2" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h2>Is Age Just a Number?</h2>
+          <p>Most footballers retire between the ages of 32 to 36. But does age really determine a player's performance?
+            While it's true that physical attributes may decline with age, many players maintain high performance levels well into their 30s. 
+            Experience, game intelligence, and adaptability often allow older players to continue excelling on the field, challenging the notion 
+            that age is the sole determinant of a footballer's success. Revealing that even older players can have high potential when it comes to football.
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <!-- end pure grid group -->
+
+    <div class="pure-g">
+      <div class="pure-u-1-1 small-font">
+        <p>This visualisation is created by Anthony Eav. 
+          The datasource is <a href="players_15.csv" target="_blank">players_15.csv</a>.</p>
+      </div>
+    </div>
+
+
+  </div> <!-- end page -->
+
+  <script type="text/javascript">
+    var specVis1 = "normalised-stacked-bars-responsive.json";
+    var specVis2 = "line-chart-responsive.json";
+
+    vegaEmbed('#vis1', specVis1, { "actions": false });
+
+    vegaEmbed('#vis2', specVis2, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis3', specVis1, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis4', specVis2, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+  </script>
+</body>
+
+</html>
