@@ -1,0 +1,299 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "title": "Eurovision Australia Placings (2016–2026)",
+
+  "data": {
+    "url": "data/Eurovision_Australia_Results.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Year": "number",
+        "Placing": "number"
+      }
+    }
+  },
+
+  "width": 350,
+  "height": 200,
+
+  "transform": [
+    {
+      "calculate": "36 - datum.Placing",
+      "as": "Score"
+    },
+    {
+      "calculate": "datum.Qualify === 'Yes' ? (36 - datum.Placing) : -(36 - datum.Placing)",
+      "as": "Diverge"
+    },
+    {
+  "calculate": "datum.Diverge < 0 ? datum.Diverge - 3 : datum.Diverge + 3",
+  "as": "LabelX"
+},
+{
+  "calculate": "datum.Placing % 10 === 1 && datum.Placing % 100 !== 11 ? datum.Placing + 'st' : datum.Placing % 10 === 2 && datum.Placing % 100 !== 12 ? datum.Placing + 'nd' : datum.Placing % 10 === 3 && datum.Placing % 100 !== 13 ? datum.Placing + 'rd' : datum.Placing + 'th'",
+  "as": "PlacingLabel"
+},
+{
+  "calculate": "datum.Placing === 26 ? 'Almost Qualified!' : datum.Placing === 2 ? 'Best Result!' : ''",
+  "as": "BestLabel"
+},
+{
+  "calculate": "datum.Diverge - 10",
+  "as": "BestX"
+},
+{
+  "calculate": "datum.Diverge + 2029",
+  "as": "BestY"
+},
+{
+  "calculate": "datum.Diverge + 10",
+  "as": "QX"
+},
+{
+  "calculate": "datum.Diverge + 1987",
+  "as": "QY"
+}
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "color": "#C85C8E"
+      },
+      "encoding": {
+        "x": { "value": 100 },
+        "y": { "value": -10 },
+        "text": { "value": "Non-Qualify" }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "color": "#D6B98C"
+      },
+      "encoding": {
+        "x": { "value": 250 },
+        "y": { "value": -10 },
+        "text": { "value": "Qualify" }
+      }
+    },
+    {
+      "mark": "bar",
+      "encoding": {
+        "y": {
+          "field": "Year",
+          "type": "ordinal",
+          "sort": "ascending"
+        },
+
+        "x": {
+          "field": "Diverge",
+          "type": "quantitative",
+          "scale": {
+            "domain": [-35, 35]
+          },
+          "axis": null
+        },
+
+        "color": {
+          "field": "Qualify",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": ["Yes", "No"],
+            "range": ["#D6B98C", "#C85C8E"]
+          }
+        },
+
+        "tooltip": [
+          { "field": "Year" },
+          { "field": "Placing" },
+          { "field": "Qualify" }
+        ]
+      }
+    },
+        {
+  "mark": {
+    "type": "rule",
+    "color": "white",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "x": { "value": 175 }
+  }
+},
+
+{
+  "mark": {
+    "type": "text"
+  },
+  "encoding": {
+    "y": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": "ascending"
+    },
+
+    "x": {
+      "field": "LabelX",
+      "type": "quantitative"
+    },
+
+    "text": {
+      "field": "PlacingLabel"
+    },
+    "color": {
+      "condition": [
+        {
+          "test": "datum.Placing === 2",
+          "value": "#c09703"
+        },
+        {
+          "test": "datum.Placing === 26",
+          "value": "#c09703"
+        }
+      ],
+      "value": "white"
+    }
+  }
+},
+    {
+  "transform": [
+    {
+      "filter": "datum.Placing === 26"
+    }
+  ],
+  "mark": {
+    "type": "rule",
+    "color": "#c09703",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "y": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": "ascending"
+    },
+    "x": {
+      "field": "Diverge",
+      "type": "quantitative"
+    },
+    "x2": { "value": 80 },
+    "y2": { "value": 70 }
+  }
+},
+    {
+  "transform": [
+    {
+      "filter": "datum.Placing === 2"
+    }
+  ],
+  "mark": {
+    "type": "rule",
+    "color": "#c09703",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "y": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": "ascending"
+    },
+    "x": {
+      "field": "Diverge",
+      "type": "quantitative"
+    },
+    "x2": { "value": 400 },
+    "y2": { "value": 70 }
+  }
+},
+{
+  "transform": [
+    {
+      "filter": "datum.Placing === 26"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "color": "#c09703",
+    "fontSize": 11,
+    "fontWeight": "bold",
+    "dy": -10
+  },
+  "encoding": {
+    "y": {
+      "field": "BestY",
+      "type": "ordinal",
+      "sort": "ascending"
+    },
+    "x": {
+      "field": "BestX",
+      "type": "quantitative"
+    },
+    "text": {
+      "field": "BestLabel"
+    }
+  }
+},
+{
+  "transform": [
+    {
+      "filter": "datum.Placing === 2"
+    }
+  ],
+  "mark": {
+    "type": "text",
+    "color": "#c09703",
+    "fontSize": 11,
+    "fontWeight": "bold",
+    "dy": -10
+  },
+  "encoding": {
+    "y": {
+      "field": "QY",
+      "type": "ordinal",
+      "sort": "ascending"
+    },
+    "x": {
+      "field": "QX",
+      "type": "quantitative"
+    },
+    "text": {
+      "field": "BestLabel"
+    }
+  }
+}
+  ],
+  "config": {
+  "background": "#000000",
+  "view": {
+    "stroke": null,
+    "fill": "#000000"
+  },
+  "axis": {
+    "grid": false,
+    "labelColor": "white",
+    "titleColor": "white",
+    "domainColor": "white",
+    "tickColor": "white"
+  },
+  "title": {
+    "color": "white",
+    "fontSize": 16,
+    "fontWeight": "bold"
+  },
+  "legend": {
+    "labelColor": "white",
+    "titleColor": "white"
+  },
+  "style": {
+    "cell": {
+      "fill": "#000000"
+    }
+  }
+}
+}
