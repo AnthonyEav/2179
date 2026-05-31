@@ -1,0 +1,288 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+
+  "width": 900,
+  "height": 900,
+
+  "signals": [
+    { "name": "radius", "update": "width/2 - 120" },
+
+    {
+      "name": "selectedCountry",
+      "value": null,
+      "on": [
+        {"events": "text:click", "update": "datum.country"},
+        {"events": "mouseup[!event.item]", "update": "null"}
+      ]
+    },
+
+    {
+      "name": "showType",
+      "value": "Both",
+      "bind": {
+        "input": "select",
+        "options": ["Both", "Jury", "Public"],
+        "name": "Vote Type: ",
+        "element": "dropdownGroup"
+      }
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "linkColor",
+      "type": "ordinal",
+      "domain": ["Jury", "Public"],
+      "range": ["#40E0D0", "#4CAF50"]
+    }
+  ],
+
+  "data": [
+    {
+      "name": "votes",
+      "url": "data/Eurovision_2016_points.csv",
+      "format": {"type": "csv"}
+    },
+
+    {
+      "name": "incomingCounts",
+      "source": "votes",
+      "transform": [
+        { "type": "aggregate", "groupby": ["to"], "ops": ["count"], "as": ["incoming"] }
+      ]
+    },
+
+    {
+      "name": "nodes",
+      "source": "votes",
+      "transform": [
+        { "type": "fold", "fields": ["from", "to"], "as": ["k", "country"] },
+        { "type": "aggregate", "groupby": ["country"] },
+
+        {
+          "type": "lookup",
+          "from": "incomingCounts",
+          "key": "to",
+          "fields": ["country"],
+          "values": ["incoming"],
+          "as": ["incoming"]
+        },
+
+        { "type": "formula", "as": "incoming", "expr": "datum.incoming == null ? 0 : datum.incoming" },
+
+        { "type": "collect", "sort": { "field": "country" } },
+        { "type": "window", "ops": ["row_number"], "as": ["index"] },
+        { "type": "formula", "as": "index", "expr": "datum.index - 1" }
+      ]
+    },
+
+    {
+      "name": "links",
+      "source": "votes",
+      "transform": [
+        { "type": "filter", "expr": "showType == 'Both' || datum.type == showType" },
+
+        {
+          "type": "lookup",
+          "from": "nodes",
+          "key": "country",
+          "fields": ["from"],
+          "values": ["index"],
+          "as": ["sourceIndex"]
+        },
+        {
+          "type": "lookup",
+          "from": "nodes",
+          "key": "country",
+          "fields": ["to"],
+          "values": ["index"],
+          "as": ["targetIndex"]
+        },
+
+        { "type": "filter", "expr": "datum.sourceIndex != null && datum.targetIndex != null" },
+
+        {
+          "type": "formula",
+          "as": "sourceAngle",
+          "expr": "2 * PI * datum.sourceIndex / length(data('nodes'))"
+        },
+        {
+          "type": "formula",
+          "as": "targetAngle",
+          "expr": "2 * PI * datum.targetIndex / length(data('nodes'))"
+        },
+
+        {
+          "type": "formula",
+          "as": "path",
+          "expr": "'M ' + (radius*cos(datum.sourceAngle - PI/2)) + ',' + (radius*sin(datum.sourceAngle - PI/2)) + ' A ' + radius + ',' + radius + ' 0 0,1 ' + (radius*cos(datum.targetAngle - PI/2)) + ',' + (radius*sin(datum.targetAngle - PI/2))"
+        }
+      ]
+    },
+
+    {
+      "name": "legendData",
+      "values": [
+        {"label": "1st Place", "color": "gold", "i": 0},
+        {"label": "2nd Place", "color": "silver", "i": 1},
+        {"label": "3rd Place", "color": "#cd7f32", "i": 2},
+        {"label": "Qualified", "color": "#D6B98C", "i": 3},
+        {"label": "Non‑Qualified", "color": "#C85C8E", "i": 4},
+        {"label": "Jury Vote", "color": "#40E0D0", "i": 5},
+        {"label": "Public Vote", "color": "#4CAF50", "i": 6}
+      ]
+    }
+  ],
+
+  "marks": [
+
+    {
+      "type": "group",
+      "name": "dropdownGroup",
+      "encode": {
+        "update": {
+          "x": {"value": 20},
+          "y": {"value": 20}
+        }
+      }
+    },
+
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {"signal": "width/2"},
+          "y": {"value": 80},
+          "text": {"value": "Eurovision 2016 Grand Final Point Distribution"},
+          "fill": {"value": "white"},
+          "fontSize": {"value": 22},
+          "fontWeight": {"value": "bold"},
+          "align": {"value": "center"},
+          "baseline": {"value": "top"}
+        }
+      }
+    },
+
+    {
+      "type": "group",
+      "encode": {
+        "update": {
+          "x": { "signal": "width/2" },
+          "y": { "signal": "height/2 + 80" }
+        }
+      },
+
+      "marks": [
+
+        {
+          "type": "text",
+          "from": { "data": "nodes" },
+          "encode": {
+            "update": {
+
+              "fill": {
+                "signal": "datum.country == 'Ukraine' ? 'gold' : datum.country == 'Australia' ? 'silver' : datum.country == 'Russia' ? '#cd7f32' : (datum.incoming == 0 ? '#C85C8E' : '#D6B98C')"
+              },
+
+              "stroke": {
+                "signal": "selectedCountry == datum.country ? 'white' : null"
+              },
+
+              "strokeWidth": {
+                "signal": "selectedCountry == datum.country ? 0.1 : 0"
+              },
+
+              "fontWeight": {
+                "signal": "datum.country == 'Ukraine' || datum.country == 'Australia' || datum.country == 'Russia' ? 'bold' : 'normal'"
+              },
+
+              "text": {
+                "signal": "datum.country == 'Bosnia and Herzegovina' ? 'Bosnia and\\nHerzegovina' : datum.country == 'United Kingdom' ? 'United\\nKingdom' : datum.country == 'Czech Republic' ? 'Czech\\nRepublic' : datum.country == 'San Marino' ? 'San\\nMarino' : datum.country"
+              },
+
+              "lineBreak": {"value": "\n"},
+              "lineHeight": {"value": 14},
+              "align": { "value": "center" },
+              "baseline": { "value": "middle" },
+              "cursor": { "value": "pointer" },
+
+              "x": {
+                "signal": "(radius+50)*cos(2*PI*datum.index/length(data('nodes')) - PI/2)"
+              },
+              "y": {
+                "signal": "(radius+50)*sin(2*PI*datum.index/length(data('nodes')) - PI/2)"
+              }
+            }
+          }
+        },
+
+        {
+          "type": "path",
+          "from": { "data": "links" },
+          "encode": {
+            "update": {
+              "path": { "field": "path" },
+              "stroke": { "field": "type", "scale": "linkColor" },
+              "strokeOpacity": {
+                "signal": "selectedCountry == null ? 0.05 : (datum.to == selectedCountry ? 0.9 : 0.02)"
+              },
+              "strokeWidth": { "field": "points" },
+              "fill": { "value": null },
+
+              "pointerEvents": {"value": "stroke"},
+              "tooltip": {
+                "signal": "selectedCountry != null && selectedCountry == datum.to ? { 'From': datum.from, 'To': datum.to, 'Points': datum.points, 'Type': datum.type } : null"
+              }
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {"signal": "width - 900"},
+          "y": {"signal": "height - 100"},
+          "text": {"value": "Legend"},
+          "fill": {"value": "white"},
+          "fontSize": {"value": 18},
+          "fontWeight": {"value": "bold"}
+        }
+      }
+    },
+
+    {
+      "type": "symbol",
+      "from": {"data": "legendData"},
+      "encode": {
+        "update": {
+          "x": {"signal": "width - 890"},
+          "y": {"signal": "height - 80 + datum.i * 24"},
+          "size": {"value": 250},
+          "fill": {"field": "color"}
+        }
+      }
+    },
+
+    {
+      "type": "text",
+      "from": {"data": "legendData"},
+      "encode": {
+        "update": {
+          "x": {"signal": "width - 870"},
+          "y": {"signal": "height - 80 + datum.i * 24"},
+          "text": {"field": "label"},
+          "fill": {"value": "white"},
+          "baseline": {"value": "middle"},
+          "fontSize": {"value": 14}
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#000000"
+  }
+}

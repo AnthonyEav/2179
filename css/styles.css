@@ -1,0 +1,65 @@
+body *{
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+  color: #6124fb;
+  font-weight: 900;
+}
+
+h2 {
+  color: #24c7d2;
+}
+
+h3 {
+  color: #6124fb;
+}
+
+html, body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  width: 1000px;
+  background-color: black;
+  color: white;
+  margin: auto;
+  padding: 50px;
+  padding-top: 35px;
+}
+
+.vis-container {
+  width: 100%;
+}
+
+.description h2,
+h1 {
+  margin-top: 0px;
+}
+
+.description-right {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.description-left {
+  padding-right: 20px;
+}
+
+.description-bottom {
+  padding-bottom: 20px;
+}
+
+.pure-g {
+  margin-bottom: 20px;
+}
+
+.small-font {
+  font-size: 14px;
+}
+
+.vis-container {
+  background-color: black;
+}

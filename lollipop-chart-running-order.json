@@ -1,0 +1,161 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "title": "Eurovision Winning Running Order",
+
+  "data": {
+    "url": "data/Eurovision_past_10_winners.csv"
+  },
+
+"transform": [
+  {
+    "calculate": "toNumber(datum['Running'])",
+    "as": "RunningOrderNum"
+  },
+  {
+    "aggregate": [
+      {
+        "op": "count",
+        "as": "count"
+      }
+    ],
+    "groupby": ["RunningOrderNum"]
+  }
+],
+"layer": [
+  {
+    "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 4,
+        "cornerRadiusTopRight": 4,
+        "color": "#7bef90",
+        "width": 14
+    },
+    "encoding": {
+      "x": {
+        "field": "RunningOrderNum",
+        "type": "ordinal",
+        "title": "Running Order",
+        "axis": {
+          "grid": false,
+           "labelAngle": 0
+        }
+      },
+        "y": {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Number of Winners",
+          "axis": {
+            "values": [0, 1, 2, 3],
+            "grid": false
+          }
+        }
+    }
+  },
+  {
+    "mark": {
+        "type": "rect",
+        "width": 22,
+        "height": 40,
+        "color": "#7bef90"
+    },
+    "encoding": {
+      "x": {
+        "field": "RunningOrderNum",
+        "type": "ordinal"
+      },
+      "y": {
+        "field": "count",
+        "type": "quantitative",
+        "title": "Number of Winners",
+        "axis": {
+          "grid": false
+        }
+      },
+      "tooltip": [
+        {
+          "field": "RunningOrderNum",
+          "type": "ordinal"
+        },
+        {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Number of Winners"
+        }
+      ]
+    }
+  },
+  {
+  "transform": [
+    {
+      "joinaggregate": [
+        { "op": "max", "field": "count", "as": "maxCount" }
+      ]
+    },
+    {
+      "filter": "datum.count === datum.maxCount"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#c09703",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": { "field": "RunningOrderNum", "type": "ordinal" },
+        "y": { "field": "count", "type": "quantitative" },
+        "x2": { "value": 250 },
+        "y2": { "value": 0 }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "color": "#c09703",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "dx" :155,
+        "dy": -5
+      },
+      "encoding": {
+        "x": { "field": "RunningOrderNum", "type": "ordinal" },
+        "y": { "field": "count", "type": "quantitative" },
+        "text": { "value": ["Number 12 is the most", "frequent winning position!"] }
+      }
+    }
+  ]
+}
+],
+
+  "width": 400,
+  "height": 200,
+
+"config": {
+  "background": "#000000",
+  "view": {
+    "stroke": null,
+    "fill": "#000000"
+  },
+  "axis": {
+    "grid": false,
+    "labelColor": "white",
+    "titleColor": "white",
+    "domainColor": "white",
+    "tickColor": "white"
+  },
+  "title": {
+    "color": "white",
+    "fontSize": 16,
+    "fontWeight": "bold"
+  },
+  "style": {
+    "cell": {
+      "fill": "#000000"
+    }
+  }
+}
+}

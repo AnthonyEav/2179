@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Can Australia Win Eurovision?</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+
+</head>
+
+<body>
+
+  <div class="page">
+
+<div class="pure-g">
+  <div class="pure-u-1-1" style="text-align: center;">
+
+    <h1 style="font-size: 4.0rem; margin-top: 20px;">Can Australia Win Eurovision?</h1>
+
+    <!-- Top line with small images -->
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Australia-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/Australia-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+
+    <!-- Main Eurovision logo -->
+    <img 
+      src="images/eurovision-logo.png" 
+      alt="Eurovision Song Contest Logo"
+      style="display: block; margin: 10px auto; max-width: 800px; width: 100%;"
+    >
+
+    <!-- Bottom line with small images -->
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Germany-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/France-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+  </div>
+</div>
+
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1" >
+        <div class="description description-right">
+        <h1>What is Eurovision?</h1>
+        </div>
+      </div>
+      <div class="pure-u-2-5">
+        <div class="description description-right">
+        <p>Before we can determine if Australia has a chance to win, we must first understand what Eurovision is. 
+        </p>
+        <p>Eurovision is an annual international song competition held among the member countries of the European Broadcasting Union (EBU). 
+          Each participating country submits an original song to be performed live on television, and then casts votes for the other countries' songs to determine the winner. 
+          The contest was establised in 1956, making it one of the longest-running television programs in the world. 
+          It is known for its diverse range of musical styles, extravagant performances, and its ability to bring together people from different cultures through music.
+        </p>
+        <p>
+          Among all the competing countries, 
+          <span style="color: #c09703; font-weight: 600;">Germany</span> 
+          and 
+          <span style="color: #c09703; font-weight: 600;">France</span> 
+          are the only two countries that have participated in every Eurovision Song Contest.
+        </p>
+      </div>
+      </div>
+      <div class="pure-u-3-5">
+        <div id="vis2" class="vis-container"></div>
+      </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div id="vis10" class="vis-container"></div>
+      </div>
+        <div class="pure-u-1-2">
+        <div class="description description-left">
+          <h2 style="margin-top: 40px;">Genres in Eurovision</h2>
+          <p>
+          Across it's 70 years of history, Eurovision has seen a wide variety of musical genres. 
+          From <span style="color:#4F8FD9; font-weight:600;">pop</span> and 
+          <span style="color:#7E57C2; font-weight:600;">dance</span>, to 
+          <span style="color:#D65A5A; font-weight:600;">traditional</span> and 
+          <span style="color:#E6C84F; font-weight:600;">ballads</span>, the contest has showcased a diverse range of musical styles. 
+          The most common genre in Eurovision is <span style="color:#4F8FD9; font-weight:600;">pop</span> music, which has consistently been a popular choice among contestants. 
+          However, there have also been entries in other genres, such as 
+          <span style="color:#8D6E63; font-weight:600;">rock</span> and even 
+          <span style="color:#E38B4D; font-weight:600;">opera</span>. 
+          The diversity of genres in Eurovision reflects the evolving musical landscape and the creativity of the participating artists.
+          </p>
+          <p>
+            Now that we have a better understanding of what Eurovision is, we can start to explore what it takes to be a winner.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Switzerland-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/Bulgaria-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="description description-right">
+          <h1>Who has won Eurovision?</h1>
+          <p>
+            The very first winner of Eurovision was Switzerland in 1956, with the song "Refrain" performed by Lys Assia.
+            After the end of the recent 2026 Eurovision song contest, we now officially have 70 winners, after Bulgaria claimed victory for the first time with their song "Bangaranga" performed by Dara. 
+          </p>
+        </div>
+      <div class="pure-u-1-1" style="margin-top: 30px;">
+        <div id="vis8" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-1" style="margin-top: 20px;">
+        <div class="description description-right">
+      <p>
+        The country with the most wins is tied between 
+        <span style="color: gold; font-weight:600;">Ireland</span> 
+        and 
+        <span style="color: gold; font-weight:600;">Sweden</span> 
+        with 7 wins each. 
+        Four countries have the second most wins of 5: 
+        <span style="color: silver; font-weight:600;">France</span>, 
+        <span style="color: silver; font-weight:600;">Luxembourg</span>, 
+        <span style="color: silver; font-weight:600;">United Kingdom</span>, 
+        and 
+        <span style="color: silver; font-weight:600;">Netherlands</span>. 
+        While 
+        <span style="color: #cd7f32; font-weight:600;">Israel</span> 
+        has the third most wins with 4. 
+        Despite having competed in every contest, Germany has only ever won twice.
+        Australia has yet to taste victory. 
+        These statistics highlight the competitive nature of Eurovision and the challenges that Australia faces in its quest for victory.
+      </p>
+        </div>
+      </div>
+      </div>
+    </div> 
+    <!-- end pure grid group -->
+    
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Ireland-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/Sweden-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="description description-right">
+          <h1>How did they win Eurovision?</h1>
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+        <p>
+        Winning Eurovision is no easy feat. It requires a combination of factors, including a catchy song, a memorable performance, and a bit of luck. 
+        Having a great song and performance is crucial, however, it is not the only factor that determines success in Eurovision.
+        In order to win, you must be a favourite with both the 
+        <span style="color:#40E0D0; font-weight:600;">jury</span> 
+        and 
+        <span style="color:#4CAF50; font-weight:600;">public</span>, 
+        as they each make up 50% of the total points.
+        </p>
+        <p>
+        Looking at the past decade winners (excluding 2020 as contest was cancelled), we can see that all previous winners recieved support from both the 
+        <span style="color:#40E0D0; font-weight:600;">jury</span> 
+        and 
+        <span style="color:#4CAF50; font-weight:600;">public</span>. 
+        Most notably, 
+        <span style="color:#c09703; font-weight:600;">Portugal's win in 2017</span> 
+        with their song "Amar Pelos Dois" performed by Salvador Sobral stands out, as they recieved the highest combined total points in the past decade with 758.
+        </p>
+
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div id="vis1" class="vis-container"></div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+      <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <div id="vis5" class="vis-container"></div>
+        </div>
+        </div>
+      <div class="pure-u-1-2">
+        <h2>Past Decade Genres</h2>
+        <p>
+        Within in the past decade, more than half the songs were 
+        <span style="color:#4F8FD9; font-weight:600;">pop</span>.
+        <span style="color:#E6C84F; font-weight:600;">Ballad</span> 
+        was the second most common, while the rest of the genres were more rare with 
+        <span style="color:#E38B4D; font-weight:600;">opera</span> 
+        being the least common with only 6 songs.
+      </p>
+      </div>
+      </div>
+    <!-- end pure grid group -->
+
+      <!-- pure grid group -->
+      <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <div id="vis4" class="vis-container"></div>
+        </div>
+        </div>
+      <div class="pure-u-1-2">
+        <h2>Past Decade Winning Genres</h2>
+        <p>
+        Within in the past decade, unsurprisingly, 
+        <span style="color:#4F8FD9; font-weight:600;">pop</span> 
+        has won the most number of times with 3 wins out of 10.
+        However, surprisingly, 
+        <span style="color:#E38B4D; font-weight:600;">opera</span> 
+        has performed better than expected, with 2 wins when there were only 6 
+        <span style="color:#E38B4D; font-weight:600;">opera</span> 
+        songs in the past decade.
+        This shows that standing out and being different can lead to glory in Eurovision.
+      </p>
+      </div>
+      </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g" style="padding-top: 20px;">
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h2>Winning Running Order</h2>
+          <p>
+            Sometimes in Eurovision there are variables you can't control, such as your position in the running order.
+            The running order can have a significant impact on a song's chances of winning.
+            Generally, songs that perform later in the show tend to have an advantage, as they are fresher in the minds of the public and jury when it comes time to vote.
+            However, there have been winners that performed early in the running order, proving that while it can be a disadvantage, it is not an insurmountable one.
+          </p>
+          <p>
+            Looking at the past decade winners, we can see that the most common running order position for performances that go on to win has been
+            <span style="color:#c09703; font-weight:600;"> position 12</span> 
+            with 3 wins.
+            Usually, the grand final consists of 26 performances, meaning 
+            <span style="color:#c09703; font-weight:600;"> position 12</span> 
+            is right in the middle.
+            This may be the new sweet spot for winning Eurovision.
+          </p>
+      </div>
+      </div>
+      <div class="pure-u-1-2">
+            <div id="vis7" class="vis-container"></div>
+        </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h2>Winning BPM</h2>
+          <p>
+            Besides the genre of a song, the BPM is also important.
+            The average BPM of a song normally is 120 BPM.
+            Although, looking at the past decade winning songs, we can see that the highest occuring win rate was between 
+            <span style="color:#c09703; font-weight:600;">130 to 140 BPM</span> 
+            with 3 wins.
+            We can also see that there were more winners with songs being faster than 120 BPM, with 6 wins, compared to only 4 wins with songs being slower than 120 BPM.
+            This suggests that lately the Eurovision audience has been favouring more upbeat and energetic songs.
+          </p>
+          <p>
+            Now that we have a better understanding of the factors that contribute to winning Eurovision, we can start to analyze Australia's past results to determine our chances of winning in the future.
+          </p>
+      </div>
+      </div>
+      <div class="pure-u-1-2">
+            <div id="vis6" class="vis-container"></div>
+        </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Portugal-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/Ukraine-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+
+        <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="description description-right">
+        <h1>How has Australia performed in Eurovision?</h1>
+      </div>
+    </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div id="vis3" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-2">
+          <div class="description description-right">
+          <h2>Australia Participation</h2>
+          <p>
+            Australia is the only Oceania country, and one in a few countries outside of Europe that has been specifically invited to compete in Eurovision.
+            Ever since our debut in 2015, where we finished 5th, we have been a regular participant ever since.
+            11 years on, we have now competed on the Eurovision stage 11 times.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+
+       <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+        <h2>Australia Results</h2>
+          <p>
+            Looking at the past decade, out of the 10 times we competed, Australia has 
+            <span style="color:#D6B98C; font-weight:600;">qualified</span> 
+            for the grand final 7 times. 
+            This is a pretty decent record as some countries struggle to even 
+            <span style="color:#D6B98C; font-weight:600;">qualify</span> 
+            at all. 
+          </p>
+          <p>
+            The best result we have achieved is placing 
+            <span style="color:#c09703; font-weight:600;">second in 2016</span>.
+            However, after placing so high, we have never been able to replicate that success in the following years.
+            The closest we have gotten was this years 2026 contest, where we placed 4th, which is still a very respectable result.
+          </p>
+      </div>
+      </div>
+      <div class="pure-u-1-2">
+            <div id="vis11" class="vis-container"></div>
+        </div>
+      </div>
+    <!-- end pure grid group -->
+
+           <!-- pure grid group -->
+    <div class="pure-g" style="padding-top: 20px; ">
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+        <h2>Australia Points</h2>
+        <p>
+          In the past decade Australia has consistently recieved decent points from the 
+          <span style="color:#40E0D0; font-weight:600;">jury</span>, 
+          with us even recieving the highest amount of 
+          <span style="color:#40E0D0; font-weight:600;">jury</span> 
+          points in 2016.
+          However, the 
+          <span style="color:#4CAF50; font-weight:600;">public</span> 
+          points never reflected the same level of support, as every year for the last decade we have always recieved more 
+          <span style="color:#40E0D0; font-weight:600;">jury</span> 
+          points than 
+          <span style="color:#4CAF50; font-weight:600;">public</span>. 
+        </p>
+        <p>
+          Australia has never recieved more than 200 
+          <span style="color:#4CAF50; font-weight:600;">public</span> 
+          points.
+          This is a concerning statistic, as only one out of the 10 past winners recieved less than 200 
+          <span style="color:#4CAF50; font-weight:600;">public</span> 
+          points.
+        </p>
+      </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div id="vis9" class="vis-container"></div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="description description-right">
+        <h2>Australia's Best Result</h2>
+        <p>
+          <span style="color:silver; font-weight:600;">Australia's</span> best result was in 2016, where we placed second 
+          with our song "Sound of Silence" performed by Dami Im.
+          This was a very memorable performance, and it was a very close contest, as we only lost to 
+          <span style="color:gold; font-weight:600;">Ukraine</span> 
+          by 23 points.
+      </p>
+      </div>
+      </div>
+    </div>
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+    <div style="display:flex; justify-content:center;">
+        <div id="vis12"></div>
+    </div> 
+      </div>
+    </div>
+    <!-- end pure grid group -->
+    
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="description description-right">
+          <p>
+            Looking at the voting patterns of 2016, we can see that 
+            <span style="color:silver; font-weight:600;">Australia</span> 
+            recieved points from every country, with 2 countries Sweden and Albania giving us maximum 
+            <span style="color:#40E0D0; font-weight:600;">jury</span> 
+            and 
+            <span style="color:#4CAF50; font-weight:600;">public</span> 
+            points.
+            This shows that we had broad support across the board, which is a great sign for our chances of winning in the future.
+          </p>
+      </div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Australia-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/Australia-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <div class="description description-right">
+        <h1>Can Australia Win Eurovision?</h1>
+        <p>
+          Now we that we understand what Eurovision is, how to win it, and how Australia has perfromed in the past.
+          We can finally answer the main question of this visualisation, which is "Can Australia win Eurovision?".
+         </p>
+          Based on our analysis, we can see that Australia has a decent chance of winning Eurovision in the future. 
+          We have consistently qualified for the grand final, and we have recieved decent points from the jury. 
+          However, we need to work on improving our public support, as that is crucial for winning Eurovision.
+          If we can find a way to connect with the public and get them to vote for us, then we have a good chance of finally claiming our first victory in Eurovision.  
+        </p>
+      </div>
+    </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+      <img src="images/Australia-Heart.png" style="width: 50px; height: auto; margin-right: 0px;">
+      <div style="flex-grow: 1; height: 2px; background-color: #26035f;"></div>
+      <img src="images/Australia-Heart.png" style="width: 50px; height: auto; margin-left: 0px;">
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-1 small-font">
+        <div class="description description-right">
+        <h3>Data Sources</h3>
+        <p>This visualisation was created by Anthony Eav. Last updated on 31/05/2026. 
+         </p>
+          <p> 
+           <span style="color:#24c7d2; font-weight:600;">Kaggle Data:</span> 
+           <a href="https://www.kaggle.com/datasets/diamondsnake/eurovision-song-contest-data" target="_blank">
+            https://www.kaggle.com/datasets/diamondsnake/eurovision-song-contest-data
+           </a>
+          </p>
+          <p> 
+          . song_data <br>
+          . Eurovision_2016_points <br>
+          . eurovision_winners_all_years <br>
+          . Eurovision_Country_Participation <br>
+          </p>
+           <p>
+          These 4 data sources are from the author diamondsnake on Kaggle, they were accessed on the date 21/05/2026.  
+        </p>
+        <p>
+          <br><span style="color:#24c7d2; font-weight:600;">Eurovision World Data:</span>
+          <a href="https://eurovisionworld.com/eurovision/2026" target="_blank">
+            https://eurovisionworld.com/eurovision/2026
+          </a>
+        </p>
+          <p> 
+          . Eurovision_Australia_Results  <br>
+          . Eurovision_past_10_winners  <br>
+          . Eurovision_past_decade_genres  <br>
+          . Eurovision_Winning_BPM  <br>
+          </p>
+           <p>
+          These 4 data sources are from the author of the Eurovision World website, they were accessed on the date 22/05/2026.  
+        </p>
+      </div>
+    </div>
+    </div>
+    
+  </div> <!-- end page -->
+
+  <script type="text/javascript">
+    var specVis1 = "./stacked-bar-winner-points.json";
+    var specVis2 = "./choropleth-map-europe.json";
+    var specVis3 = "./choropleth-map-australia.json";
+    var specVis4 = "./ring-chart-past-10-winners.json";
+    var specVis5 = "./ring-chart-past-decade-genres.json";
+    var specVis6 = "./lollipop-chart-bpm-winning-songs.json";
+    var specVis7 = "./lollipop-chart-running-order.json";
+    var specVis8 = "./lollipop-chart-win-count.json";
+    var specVis9 = "./stacked-bar-australia.json";
+    var specVis10 = "./word-cloud-genres.json";
+    var specVis11 = "./diverging-bar-australia.json";
+    var specVis12 = "./chord-diagram-2016.json";
+
+    vegaEmbed('#vis1', specVis1, { "actions": true });
+
+    vegaEmbed('#vis2', specVis2, { "actions": true }).then(function (result) {
+     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis3', specVis3, { "actions": true }).then(function (result) {
+     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis4', specVis4, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis5', specVis5, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis6', specVis6, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis7', specVis7, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis8', specVis8, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis9', specVis9, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis10', specVis10, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis11', specVis11, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis12', specVis12, { "actions": true }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+  </script>
+</body>
+
+</html>
